@@ -7,22 +7,13 @@ interface Channel {
   name: string;
   number: string;
   description: string;
-  category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News" | "Sky Sports" | "TNT Sports";
+  category: "Sky Sports" | "TNT Sports";
   streamUrl?: string;
   thumbnailUrl?: string;
   isLive: boolean;
 }
 
 const skyChannels: Channel[] = [
-  {
-    name: "Man United vs Arsenal",
-    number: "401",
-    description: "Live Premier League match - Old Trafford",
-    category: "Premier League",
-    streamUrl: "https://fstv.online/match/manchester-united-vs-arsenal-football-1378977",
-    thumbnailUrl: "/lovable-uploads/fdb7f44b-2abf-43ce-8086-d2d002bf1501.png",
-    isLive: true
-  },
   // Sky Sports Channels
   {
     name: "Sky Sports Premier League",
@@ -85,7 +76,6 @@ const skyChannels: Channel[] = [
 
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
 
   const handleChannelSelect = (channel: { name: string; number: string; streamUrl?: string }) => {
     const fullChannel = skyChannels.find(c => c.number === channel.number);
@@ -98,45 +88,17 @@ export function ChannelGrid() {
         description: `Channel ${channel.number} - Loading live stream...`,
       });
 
-      // If it's channel 401, show the video player
-      if (channel.number === "401") {
-        setShowVideoPlayer(true);
-        
-        setTimeout(() => {
-          toast({
-            title: "Stream Ready",
-            description: `Now watching ${channel.name} live!`,
-          });
-        }, 1500);
-      } else {
-        // For other channels, just show the selection info
-        console.log(`Opening stream: ${channel.streamUrl}`);
-        
-        setTimeout(() => {
-          toast({
-            title: "Stream Ready",
-            description: `Now watching ${channel.name} live!`,
-          });
-        }, 2000);
-      }
+      // Show selection info
+      console.log(`Opening stream: ${channel.streamUrl}`);
+      
+      setTimeout(() => {
+        toast({
+          title: "Stream Ready",
+          description: `Now watching ${channel.name} live!`,
+        });
+      }, 2000);
     }
   };
-
-  const handleBackToChannels = () => {
-    setShowVideoPlayer(false);
-    setSelectedChannel(null);
-  };
-
-  // Show video player for channel 401
-  if (showVideoPlayer && selectedChannel?.number === "401") {
-    return (
-      <VideoPlayer
-        channelName={selectedChannel.name}
-        channelNumber={selectedChannel.number}
-        onBack={handleBackToChannels}
-      />
-    );
-  }
 
   return (
     <div className="container mx-auto px-8 py-8">
@@ -144,28 +106,8 @@ export function ChannelGrid() {
       <div className="mb-8">
         <h2 className="text-4xl font-bold text-foreground mb-2">Live Channels</h2>
         <p className="text-xl text-muted-foreground">
-          Choose from Sky Sports, TNT Sports and live matches
+          Choose from Sky Sports and TNT Sports
         </p>
-      </div>
-
-      {/* Live Match Section */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-foreground mb-6">Featured Match</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {skyChannels.filter(channel => channel.category === "Premier League").map((channel) => (
-            <ChannelCard
-              key={channel.number}
-              name={channel.name}
-              number={channel.number}
-              description={channel.description}
-              category={channel.category}
-              isLive={channel.isLive}
-              streamUrl={channel.streamUrl}
-              thumbnailUrl={channel.thumbnailUrl}
-              onSelect={handleChannelSelect}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Sky Sports Section */}
