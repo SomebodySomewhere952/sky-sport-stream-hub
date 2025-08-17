@@ -89,8 +89,8 @@ export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   
-  // Grid layout for TV navigation
-  const GRID_COLS = 4; // 4 columns on mobile, 8 on desktop
+  // Grid layout for TV navigation with multiple rows
+  const GRID_COLS = 3; // 3 columns for better thumbnail size
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
   
@@ -186,7 +186,7 @@ export function ChannelGrid() {
       </div>
 
       {/* All Channels in Grid Layout */}
-      <div className="grid grid-cols-4 lg:grid-cols-8 gap-4 max-w-7xl mx-auto">
+      <div className="grid grid-cols-3 gap-6 max-w-6xl mx-auto">
         {[...skyChannelsData, ...tntChannelsData].map((channel, index) => {
           const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
           return (
