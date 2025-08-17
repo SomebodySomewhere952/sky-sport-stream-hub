@@ -8,6 +8,11 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [logoVisible, setLogoVisible] = useState(false);
 
+  const handleSkip = () => {
+    setIsVisible(false);
+    setTimeout(onComplete, 500);
+  };
+
   useEffect(() => {
     // Start logo fade-in animation after a brief delay
     const logoTimer = setTimeout(() => {
@@ -20,16 +25,22 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
       setTimeout(onComplete, 500); // Wait for fade-out to complete
     }, 3500);
 
+    // Add Fire TV remote support for intro screen
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
+        event.preventDefault();
+        handleSkip();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       clearTimeout(logoTimer);
       clearTimeout(completeTimer);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onComplete]);
-
-  const handleSkip = () => {
-    setIsVisible(false);
-    setTimeout(onComplete, 500);
-  };
+  }, [onComplete, handleSkip]);
 
   if (!isVisible) {
     return (

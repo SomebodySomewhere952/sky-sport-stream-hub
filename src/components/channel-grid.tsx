@@ -1,7 +1,8 @@
 import { ChannelCard } from "@/components/ui/channel-card";
 import { VideoPlayer } from "@/components/video-player";
-import { useState } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { toast } from "@/hooks/use-toast";
+import { useTvNavigation, NavigationItem } from "@/hooks/use-tv-navigation";
 
 interface Channel {
   name: string;
@@ -84,6 +85,56 @@ const skyChannels: Channel[] = [
 
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const channelRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  
+  // Calculate grid layout
+  const GRID_COLS = 4;
+  const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
+  const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
+  
+  // Create navigation items for TV remote
+  const navigationItems: NavigationItem[] = useMemo(() => {
+    const items: NavigationItem[] = [];
+    
+    // Add Sky Sports channels
+    skyChannelsData.forEach((channel, index) => {
+      const row = Math.floor(index / GRID_COLS);
+      const col = index % GRID_COLS;
+      items.push({
+        id: `sky-${channel.number}`,
+        element: channelRefs.current[`sky-${channel.number}`],
+        row,
+        col
+      });
+    });
+    
+    // Add TNT Sports channels (continuing from Sky Sports)
+    const skyRows = Math.ceil(skyChannelsData.length / GRID_COLS);
+    tntChannelsData.forEach((channel, index) => {
+      const row = skyRows + Math.floor(index / GRID_COLS);
+      const col = index % GRID_COLS;
+      items.push({
+        id: `tnt-${channel.number}`,
+        element: channelRefs.current[`tnt-${channel.number}`],
+        row,
+        col
+      });
+    });
+    
+    return items;
+  }, [skyChannelsData, tntChannelsData]);
+
+  const { currentFocus, setFocus } = useTvNavigation({
+    items: navigationItems,
+    gridCols: GRID_COLS,
+    onSelect: (id) => {
+      const channelNumber = id.split('-')[1];
+      const channel = skyChannels.find(c => c.number === channelNumber);
+      if (channel) {
+        handleChannelSelect(channel);
+      }
+    }
+  });
 
   const handleChannelSelect = (channel: { name: string; number: string; streamUrl?: string }) => {
     const fullChannel = skyChannels.find(c => c.number === channel.number);
@@ -122,9 +173,12 @@ export function ChannelGrid() {
       <div className="mb-12">
         <h3 className="text-2xl font-bold text-foreground mb-6">Sky Sports</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {skyChannels.filter(channel => channel.category === "Sky Sports").map((channel) => (
+          {skyChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}
+              ref={(el) => {
+                channelRefs.current[`sky-${channel.number}`] = el;
+              }}
               name={channel.name}
               number={channel.number}
               description={channel.description}
@@ -133,6 +187,8 @@ export function ChannelGrid() {
               streamUrl={channel.streamUrl}
               thumbnailUrl={channel.thumbnailUrl}
               onSelect={handleChannelSelect}
+              isFocused={currentFocus === `sky-${channel.number}`}
+              tvNavigationId={`sky-${channel.number}`}
             />
           ))}
         </div>
@@ -142,9 +198,12 @@ export function ChannelGrid() {
       <div className="mb-12">
         <h3 className="text-2xl font-bold text-foreground mb-6">TNT Sports</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {skyChannels.filter(channel => channel.category === "TNT Sports").map((channel) => (
+          {tntChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}
+              ref={(el) => {
+                channelRefs.current[`tnt-${channel.number}`] = el;
+              }}
               name={channel.name}
               number={channel.number}
               description={channel.description}
@@ -153,6 +212,8 @@ export function ChannelGrid() {
               streamUrl={channel.streamUrl}
               thumbnailUrl={channel.thumbnailUrl}
               onSelect={handleChannelSelect}
+              isFocused={currentFocus === `tnt-${channel.number}`}
+              tvNavigationId={`tnt-${channel.number}`}
             />
           ))}
         </div>

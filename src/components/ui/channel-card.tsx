@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Play, Tv } from "lucide-react";
@@ -12,6 +12,8 @@ interface ChannelCardProps {
   streamUrl?: string;
   thumbnailUrl?: string;
   onSelect: (channel: { name: string; number: string; streamUrl?: string }) => void;
+  isFocused?: boolean;
+  tvNavigationId?: string;
 }
 
 const categoryColors = {
@@ -19,7 +21,7 @@ const categoryColors = {
   "TNT Sports": "bg-red-600"
 };
 
-export function ChannelCard({ 
+export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({ 
   name, 
   number, 
   description, 
@@ -27,9 +29,12 @@ export function ChannelCard({
   category,
   streamUrl,
   thumbnailUrl,
-  onSelect 
-}: ChannelCardProps) {
-  const [isFocused, setIsFocused] = useState(false);
+  onSelect,
+  isFocused: externalFocused = false,
+  tvNavigationId 
+}, ref) => {
+  const [internalFocused, setInternalFocused] = useState(false);
+  const isFocused = externalFocused || internalFocused;
 
   const handleSelect = () => {
     onSelect({ name, number, streamUrl });
@@ -37,17 +42,18 @@ export function ChannelCard({
 
   return (
     <Card 
+      ref={ref}
       className={`
         relative overflow-hidden cursor-pointer p-0 h-48
         transition-all duration-200 ease-out
         hover:scale-105 hover:shadow-2xl
-        focus:scale-105 focus:shadow-2xl focus:ring-4 focus:ring-tv-focus/50
+        focus:scale-105 focus:shadow-2xl focus:ring-4 focus:ring-primary/50
         bg-card border-border/50 backdrop-blur-sm
-        ${isFocused ? 'ring-4 ring-tv-focus/50 animate-glow-pulse' : ''}
+        ${isFocused ? 'ring-4 ring-primary/70 scale-105 shadow-2xl' : ''}
       `}
       onClick={handleSelect}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
+      onFocus={() => setInternalFocused(true)}
+      onBlur={() => setInternalFocused(false)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -116,4 +122,6 @@ export function ChannelCard({
       `} />
     </Card>
   );
-}
+});
+
+ChannelCard.displayName = "ChannelCard";

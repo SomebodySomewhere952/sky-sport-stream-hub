@@ -120,5 +120,129 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: system-ui, -apple-system, sans-serif;
   }
+}
+
+@layer utilities {
+  .bg-gradient-sports {
+    background: var(--gradient-sports);
+  }
+  
+  .bg-gradient-radial {
+    background: var(--gradient-glow);
+  }
+  
+  /* Fire TV specific animations and utilities */
+  @keyframes glow-pulse {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--tv-focus) / 0.5);
+    }
+    50% { 
+      box-shadow: 0 0 30px hsl(var(--tv-focus) / 0.8), 
+                  0 0 40px hsl(var(--tv-focus) / 0.4);
+    }
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+  .animate-fade-out {
+    animation: fade-out 0.5s ease-out forwards;
+  }
+  
+  /* Text line clamping */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Ensure focus is always visible on TV */
+  *:focus {
+    outline: none !important;
+  }
+}
+
+/* Fire TV specific responsive styles */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on Fire TV since they don't make sense */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  .hover\:shadow-2xl:hover {
+    box-shadow: none;
+  }
+  
+  .hover\:opacity-100:hover {
+    opacity: inherit;
+  }
+  
+  .hover\:bg-accent:hover {
+    background-color: inherit;
+  }
+}
+
+/* Large screen optimizations for TV */
+@media screen and (min-width: 1920px) {
+  body {
+    font-size: 1.125rem;
+  }
+  
+  h1, h2, h3 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Larger focus rings for TV viewing distance */
+  .focus\:ring-4:focus {
+    box-shadow: 0 0 0 6px hsl(var(--tv-focus) / 0.5);
+  }
+}
+
+/* Fire TV specific optimizations */
+body.fire-tv {
+  /* Disable text selection on Fire TV */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* Optimize scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+body.fire-tv * {
+  /* Prevent focus outline flicker */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* TV mode general optimizations */
+body.tv-mode {
+  /* Larger default text for TV viewing distance */
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+body.tv-mode .container {
+  /* Larger containers on TV */
+  max-width: 95%;
+}
+
+/* Focus management for TV navigation */
+.tv-focusable {
+  transition: var(--transition-tv);
+}
+
+.tv-focusable:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 4px hsl(var(--tv-focus) / 0.7);
+  z-index: 10;
 }
