@@ -10,6 +10,7 @@ interface ChannelCardProps {
   isLive?: boolean;
   category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News";
   streamUrl?: string;
+  thumbnailUrl?: string;
   onSelect: (channel: { name: string; number: string; streamUrl?: string }) => void;
 }
 
@@ -29,6 +30,7 @@ export function ChannelCard({
   isLive = true, 
   category,
   streamUrl,
+  thumbnailUrl,
   onSelect 
 }: ChannelCardProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -40,7 +42,7 @@ export function ChannelCard({
   return (
     <Card 
       className={`
-        relative overflow-hidden cursor-pointer p-6 h-48
+        relative overflow-hidden cursor-pointer p-0 h-48
         transition-all duration-200 ease-out
         hover:scale-105 hover:shadow-2xl
         focus:scale-105 focus:shadow-2xl focus:ring-4 focus:ring-tv-focus/50
@@ -58,20 +60,28 @@ export function ChannelCard({
       }}
       tabIndex={0}
     >
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Background thumbnail */}
+      {thumbnailUrl && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${thumbnailUrl})` }}
+        />
+      )}
+      
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/50" />
       
       {/* Content */}
-      <div className="relative z-10 flex flex-col h-full">
+      <div className="relative z-10 flex flex-col h-full p-6">
         {/* Header */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-              <Tv className="w-6 h-6 text-primary" />
+            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+              <Tv className="w-6 h-6 text-white" />
             </div>
             <div>
-              <div className="text-sm text-muted-foreground font-medium">CH {number}</div>
-              <h3 className="text-lg font-bold text-foreground leading-tight">{name}</h3>
+              <div className="text-sm text-white/80 font-medium">CH {number}</div>
+              <h3 className="text-lg font-bold text-white leading-tight">{name}</h3>
             </div>
           </div>
           
@@ -84,7 +94,7 @@ export function ChannelCard({
         </div>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground mb-4 flex-1 line-clamp-2">
+        <p className="text-sm text-white/80 mb-4 flex-1 line-clamp-2">
           {description}
         </p>
 
@@ -96,7 +106,7 @@ export function ChannelCard({
             {category}
           </Badge>
           
-          <div className="flex items-center gap-2 text-primary">
+          <div className="flex items-center gap-2 text-white">
             <Play className="w-4 h-4" />
             <span className="text-sm font-medium">Watch</span>
           </div>

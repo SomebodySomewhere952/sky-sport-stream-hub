@@ -9,72 +9,18 @@ interface Channel {
   description: string;
   category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News";
   streamUrl?: string;
+  thumbnailUrl?: string;
   isLive: boolean;
 }
 
 const skyChannels: Channel[] = [
   {
-    name: "Sky Sports Premier League",
+    name: "Man United vs Arsenal",
     number: "401",
-    description: "Live Premier League matches, highlights, and analysis",
+    description: "Live Premier League match - Old Trafford",
     category: "Premier League",
-    streamUrl: "https://your-stream-url-1.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports Football",
-    number: "402", 
-    description: "Championship, League One, Two and international football",
-    category: "Football",
-    streamUrl: "https://your-stream-url-2.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports Main Event",
-    number: "403",
-    description: "The biggest sporting events live",
-    category: "Premier League",
-    streamUrl: "https://your-stream-url-3.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports Cricket",
-    number: "404",
-    description: "Live cricket from around the world",
-    category: "Cricket",
-    streamUrl: "https://your-stream-url-4.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports F1",
-    number: "405",
-    description: "Every F1 race live plus practice and qualifying",
-    category: "F1",
-    streamUrl: "https://your-stream-url-5.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports Golf",
-    number: "406",
-    description: "Major championships and PGA Tour events",
-    category: "Golf",
-    streamUrl: "https://your-stream-url-6.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports News",
-    number: "407",
-    description: "Breaking sports news and updates 24/7",
-    category: "News",
-    streamUrl: "https://your-stream-url-7.m3u8",
-    isLive: true
-  },
-  {
-    name: "Sky Sports Arena",
-    number: "408",
-    description: "Live rugby, netball, and other premium sports",
-    category: "Football",
-    streamUrl: "https://your-stream-url-8.m3u8",
+    streamUrl: "https://fstv.online/match/manchester-united-vs-arsenal-football-1378977",
+    thumbnailUrl: "/lovable-uploads/fdb7f44b-2abf-43ce-8086-d2d002bf1501.png",
     isLive: true
   }
 ];
@@ -138,9 +84,9 @@ export function ChannelGrid() {
     <div className="container mx-auto px-8 py-8">
       {/* Section header */}
       <div className="mb-8">
-        <h2 className="text-4xl font-bold text-foreground mb-2">Select Channel</h2>
+        <h2 className="text-4xl font-bold text-foreground mb-2">Live Match</h2>
         <p className="text-xl text-muted-foreground">
-          Choose from our selection of live Sky Sports channels
+          Watch Manchester United vs Arsenal live
         </p>
       </div>
 
@@ -155,6 +101,7 @@ export function ChannelGrid() {
             category={channel.category}
             isLive={channel.isLive}
             streamUrl={channel.streamUrl}
+            thumbnailUrl={channel.thumbnailUrl}
             onSelect={handleChannelSelect}
           />
         ))}
