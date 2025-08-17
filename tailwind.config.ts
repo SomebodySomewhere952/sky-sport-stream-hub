@@ -117,7 +117,8 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-sports': 'var(--gradient-sports)',
-				'gradient-glow': 'var(--gradient-glow)'
+				'gradient-glow': 'var(--gradient-glow)',
+				'gradient-radial': 'radial-gradient(circle at center, var(--tw-gradient-stops))'
 			}
 		}
 	},
