@@ -12,7 +12,7 @@ export function TvHeader() {
               <Tv className="w-8 h-8 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Sky Sports</h1>
+              <h1 className="text-3xl font-bold text-foreground">127</h1>
               <p className="text-muted-foreground">Live Sports Streaming</p>
             </div>
           </div>
