@@ -36,6 +36,7 @@ const skyChannels: Channel[] = [
     number: "404",
     description: "Major sporting events and highlights",
     category: "Sky Sports",
+    thumbnailUrl: "/lovable-uploads/5d44c577-2418-4006-af3e-0ae97ef525ec.png",
     isLive: true
   },
   // TNT Sports Channels
