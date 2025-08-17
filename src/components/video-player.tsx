@@ -102,9 +102,9 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
           <iframe
             ref={iframeRef}
-            src={streamUrl}
+            src={`${streamUrl}?autoplay=1&muted=0&controls=1`}
             className="absolute inset-0 w-full h-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
             title={`${channelName} Live Stream`}
           />
