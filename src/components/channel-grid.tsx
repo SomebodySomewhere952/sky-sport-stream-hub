@@ -21,6 +21,7 @@ const skyChannels: Channel[] = [
     number: "402",
     description: "Premier League matches and analysis",
     category: "Sky Sports",
+    streamUrl: "https://embedsforlife.online/embed/b81dcecb-79b8-11f0-8a44-bc2411b21e0d",
     thumbnailUrl: "/lovable-uploads/64e172a6-3e48-4a2a-9a56-3e6b0700bb21.png",
     isLive: true
   },
@@ -47,6 +48,7 @@ const skyChannels: Channel[] = [
     number: "410",
     description: "Premium sports entertainment",
     category: "TNT Sports",
+    streamUrl: "https://embedsforlife.online/embed/0d8c4afe-3bc4-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
@@ -55,6 +57,7 @@ const skyChannels: Channel[] = [
     number: "411",
     description: "Live sports coverage",
     category: "TNT Sports",
+    streamUrl: "https://embedsforlife.online/embed/48508494-3e9e-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
@@ -63,6 +66,7 @@ const skyChannels: Channel[] = [
     number: "412", 
     description: "Sports action and events",
     category: "TNT Sports",
+    streamUrl: "https://embedsforlife.online/embed/48508a47-3e9e-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
@@ -71,6 +75,7 @@ const skyChannels: Channel[] = [
     number: "413",
     description: "Extended sports programming",
     category: "TNT Sports",
+    streamUrl: "https://embedsforlife.online/embed/48508e24-3e9e-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
@@ -79,7 +84,7 @@ const skyChannels: Channel[] = [
     number: "414",
     description: "Sports highlights and analysis",
     category: "TNT Sports",
-    streamUrl: "https://embedsforlife.online/embed/78cf7998-3cda-11f0-afb1-ecf4bbdafde4",
+    streamUrl: "https://embedsforlife.online/embed/485091d0-3e9e-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   }
