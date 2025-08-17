@@ -37,6 +37,7 @@ const skyChannels: Channel[] = [
     number: "404",
     description: "Major sporting events and highlights",
     category: "Sky Sports",
+    streamUrl: "https://embedsforlife.online/embed/5eb26fd6-7b05-11f0-8a44-bc2411b21e0d",
     thumbnailUrl: "/lovable-uploads/5d44c577-2418-4006-af3e-0ae97ef525ec.png",
     isLive: true
   },
