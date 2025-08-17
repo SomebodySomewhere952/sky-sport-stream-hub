@@ -86,28 +86,25 @@ const skyChannels: Channel[] = [
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   
-  
-  // Calculate grid layout
-  const GRID_COLS = 4;
+  // Single column layout for TV navigation
+  const GRID_COLS = 1;
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
   
-  // Create navigation items for TV remote - treat all channels as one continuous sequence
+  // Create navigation items for TV remote - single column layout
   const navigationItems: NavigationItem[] = useMemo(() => {
     const items: NavigationItem[] = [];
     const allChannels = [...skyChannelsData, ...tntChannelsData];
     
-    // Create a single continuous sequence for better navigation
+    // Single column - each channel gets its own row
     allChannels.forEach((channel, index) => {
-      const row = Math.floor(index / GRID_COLS);
-      const col = index % GRID_COLS;
       const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
       
       items.push({
         id: `${channelType}-${channel.number}`,
         element: null,
-        row,
-        col
+        row: index,
+        col: 0
       });
     });
     
@@ -163,7 +160,7 @@ export function ChannelGrid() {
       {/* Sky Sports Section */}
       <div className="mb-12">
         <h3 className="text-2xl font-bold text-foreground mb-6">Sky Sports</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="flex flex-col gap-4 max-w-2xl mx-auto">
           {skyChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}
@@ -185,7 +182,7 @@ export function ChannelGrid() {
       {/* TNT Sports Section */}
       <div className="mb-12">
         <h3 className="text-2xl font-bold text-foreground mb-6">TNT Sports</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="flex flex-col gap-4 max-w-2xl mx-auto">
           {tntChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}

@@ -28,38 +28,28 @@ export function useTvNavigation({
     const idx = items.findIndex(item => item.id === currentId);
     if (idx === -1) return null;
 
-    const current = items[idx];
     let targetIndex: number | null = null;
 
     switch (direction) {
-      case 'right': {
-        // Move to next item; if at row end but there is a next item, go to it
-        if (idx + 1 < items.length) {
-          targetIndex = idx + 1;
-        }
-        break;
-      }
-      case 'left': {
+      case 'up':
         if (idx - 1 >= 0) {
           targetIndex = idx - 1;
         }
         break;
-      }
-      case 'down': {
-        const candidate = idx + gridCols;
-        if (candidate < items.length) targetIndex = candidate;
+      case 'down':
+        if (idx + 1 < items.length) {
+          targetIndex = idx + 1;
+        }
         break;
-      }
-      case 'up': {
-        const candidate = idx - gridCols;
-        if (candidate >= 0) targetIndex = candidate;
-        break;
-      }
+      case 'left':
+      case 'right':
+        // No horizontal navigation in single column
+        return null;
     }
 
     if (targetIndex === null) return null;
     return items[targetIndex] ?? null;
-  }, [items, gridCols]);
+  }, [items]);
 
   const setFocus = useCallback((itemId: string) => {
     const item = items.find(item => item.id === itemId);

@@ -47,7 +47,7 @@ export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({
       role="button"
       aria-selected={isFocused}
       className={`
-        relative overflow-hidden cursor-pointer p-0 h-48 tv-focusable
+        relative overflow-hidden cursor-pointer p-0 h-32 w-full tv-focusable
         transition-all duration-200 ease-out
         hover:scale-105 hover:shadow-2xl
         focus:scale-105 focus:shadow-2xl focus:ring-4 focus:ring-primary/50
