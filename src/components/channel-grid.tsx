@@ -1,6 +1,6 @@
 import { ChannelCard } from "@/components/ui/channel-card";
 import { VideoPlayer } from "@/components/video-player";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { toast } from "@/hooks/use-toast";
 import { useTvNavigation, NavigationItem } from "@/hooks/use-tv-navigation";
 
@@ -85,7 +85,7 @@ const skyChannels: Channel[] = [
 
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const channelRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  
   
   // Calculate grid layout
   const GRID_COLS = 4;
@@ -102,7 +102,7 @@ export function ChannelGrid() {
       const col = index % GRID_COLS;
       items.push({
         id: `sky-${channel.number}`,
-        element: channelRefs.current[`sky-${channel.number}`],
+        element: null,
         row,
         col
       });
@@ -115,7 +115,7 @@ export function ChannelGrid() {
       const col = index % GRID_COLS;
       items.push({
         id: `tnt-${channel.number}`,
-        element: channelRefs.current[`tnt-${channel.number}`],
+        element: null,
         row,
         col
       });
@@ -176,9 +176,6 @@ export function ChannelGrid() {
           {skyChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}
-              ref={(el) => {
-                channelRefs.current[`sky-${channel.number}`] = el;
-              }}
               name={channel.name}
               number={channel.number}
               description={channel.description}
@@ -201,9 +198,6 @@ export function ChannelGrid() {
           {tntChannelsData.map((channel) => (
             <ChannelCard
               key={channel.number}
-              ref={(el) => {
-                channelRefs.current[`tnt-${channel.number}`] = el;
-              }}
               name={channel.name}
               number={channel.number}
               description={channel.description}

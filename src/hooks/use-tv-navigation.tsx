@@ -84,76 +84,86 @@ export function useTvNavigation({
 
   const setFocus = useCallback((itemId: string) => {
     const item = items.find(item => item.id === itemId);
-    if (item?.element) {
-      item.element.focus();
-      currentFocusRef.current = itemId;
+    let el: HTMLElement | null | undefined = item?.element;
+
+    if (!el) {
+      // Fallback: query by data attribute
+      el = document.querySelector(`[data-tv-id="${itemId}"]`) as HTMLElement | null;
     }
+
+    if (el) {
+      el.focus();
+      currentFocusRef.current = itemId;
+      return true;
+    }
+    return false;
   }, [items]);
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    const { key } = event;
-    
-    // Handle D-pad navigation
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
-      event.preventDefault();
-      
+    const key = (event as any).key as string | undefined;
+    const code = (event as any).keyCode ?? (event as any).which;
+
+    const isArrow = (key && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) || [19, 20, 21, 22].includes(code);
+    const isSelect = (key === 'Enter' || key === ' ') || [13, 23, 66].includes(code);
+    const isBack = (key === 'Escape' || key === 'Backspace') || [4, 8, 27].includes(code);
+
+    if (isArrow) {
       const currentId = currentFocusRef.current;
+      let prevented = false;
+
       if (!currentId) {
-        // No current focus, focus first item
         if (items.length > 0) {
-          setFocus(items[0].id);
+          prevented = setFocus(items[0].id);
         }
-        return;
+      } else {
+        let direction: 'up' | 'down' | 'left' | 'right' = 'down';
+        if (key === 'ArrowUp' || code === 19) direction = 'up';
+        else if (key === 'ArrowDown' || code === 20) direction = 'down';
+        else if (key === 'ArrowLeft' || code === 21) direction = 'left';
+        else if (key === 'ArrowRight' || code === 22) direction = 'right';
+
+        const nextItem = findNextItem(currentId, direction);
+        if (nextItem) {
+          prevented = setFocus(nextItem.id) || prevented;
+        }
       }
 
-      let direction: 'up' | 'down' | 'left' | 'right';
-      switch (key) {
-        case 'ArrowUp':
-          direction = 'up';
-          break;
-        case 'ArrowDown':
-          direction = 'down';
-          break;
-        case 'ArrowLeft':
-          direction = 'left';
-          break;
-        case 'ArrowRight':
-          direction = 'right';
-          break;
-        default:
-          return;
-      }
-
-      const nextItem = findNextItem(currentId, direction);
-      if (nextItem) {
-        setFocus(nextItem.id);
-      }
+      if (prevented) event.preventDefault();
+      return;
     }
-    
-    // Handle Enter/OK button
-    else if (key === 'Enter' || key === ' ') {
-      event.preventDefault();
+
+    if (isSelect) {
       if (currentFocusRef.current && onSelect) {
         onSelect(currentFocusRef.current);
+        event.preventDefault();
       }
+      return;
     }
-    
-    // Handle Back button
-    else if (key === 'Escape' || key === 'Backspace') {
-      event.preventDefault();
+
+    if (isBack) {
       if (onBack) {
         onBack();
+        event.preventDefault();
       }
     }
   }, [items, findNextItem, setFocus, onSelect, onBack]);
 
   useEffect(() => {
-    // Set initial focus
-    if (initialFocus && items.some(item => item.id === initialFocus)) {
-      setFocus(initialFocus);
-    } else if (items.length > 0) {
-      setFocus(items[0].id);
+    // Set initial focus on next frame to ensure DOM is ready
+    const targetId = (initialFocus && items.some(item => item.id === initialFocus))
+      ? initialFocus
+      : items[0]?.id;
+
+    let raf: number | null = null;
+    if (targetId) {
+      raf = requestAnimationFrame(() => {
+        setFocus(targetId);
+      });
     }
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [initialFocus, items, setFocus]);
 
   useEffect(() => {
