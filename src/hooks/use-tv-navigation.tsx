@@ -25,61 +25,40 @@ export function useTvNavigation({
   const currentFocusRef = useRef<string | null>(null);
 
   const findNextItem = useCallback((currentId: string, direction: 'up' | 'down' | 'left' | 'right') => {
-    const currentItem = items.find(item => item.id === currentId);
-    if (!currentItem) return null;
+    const idx = items.findIndex(item => item.id === currentId);
+    if (idx === -1) return null;
 
-    const { row, col } = currentItem;
-    let targetRow = row;
-    let targetCol = col;
+    const current = items[idx];
+    let targetIndex: number | null = null;
 
     switch (direction) {
-      case 'up':
-        targetRow = Math.max(0, row - 1);
-        break;
-      case 'down':
-        targetRow = row + 1;
-        break;
-      case 'left':
-        targetCol = Math.max(0, col - 1);
-        break;
-      case 'right':
-        targetCol = Math.min(gridCols - 1, col + 1);
-        break;
-    }
-
-    // Find item at target position
-    let targetItem = items.find(item => item.row === targetRow && item.col === targetCol);
-    
-    // If no exact match, find closest item in that direction
-    if (!targetItem) {
-      if (direction === 'up' || direction === 'down') {
-        // Find closest item in the same column
-        const sameColItems = items.filter(item => item.col === col);
-        if (direction === 'up') {
-          targetItem = sameColItems
-            .filter(item => item.row < row)
-            .sort((a, b) => b.row - a.row)[0];
-        } else {
-          targetItem = sameColItems
-            .filter(item => item.row > row)
-            .sort((a, b) => a.row - b.row)[0];
+      case 'right': {
+        // Move to next item; if at row end but there is a next item, go to it
+        if (idx + 1 < items.length) {
+          targetIndex = idx + 1;
         }
-      } else {
-        // Find closest item in the same row
-        const sameRowItems = items.filter(item => item.row === row);
-        if (direction === 'left') {
-          targetItem = sameRowItems
-            .filter(item => item.col < col)
-            .sort((a, b) => b.col - a.col)[0];
-        } else {
-          targetItem = sameRowItems
-            .filter(item => item.col > col)
-            .sort((a, b) => a.col - b.col)[0];
+        break;
+      }
+      case 'left': {
+        if (idx - 1 >= 0) {
+          targetIndex = idx - 1;
         }
+        break;
+      }
+      case 'down': {
+        const candidate = idx + gridCols;
+        if (candidate < items.length) targetIndex = candidate;
+        break;
+      }
+      case 'up': {
+        const candidate = idx - gridCols;
+        if (candidate >= 0) targetIndex = candidate;
+        break;
       }
     }
 
-    return targetItem;
+    if (targetIndex === null) return null;
+    return items[targetIndex] ?? null;
   }, [items, gridCols]);
 
   const setFocus = useCallback((itemId: string) => {
@@ -93,6 +72,7 @@ export function useTvNavigation({
 
     if (el) {
       el.focus();
+      try { el.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' }); } catch {}
       currentFocusRef.current = itemId;
       return true;
     }
