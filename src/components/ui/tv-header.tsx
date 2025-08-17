@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Zap, Trophy, Users, Calendar, TrendingUp } from "lucide-react";
+import { Zap } from "lucide-react";
 
 export function TvHeader() {
   return (
@@ -21,32 +21,11 @@ export function TvHeader() {
                 127 SPORTS
               </h1>
               <p className="text-muted-foreground font-medium tracking-wide">
-                Premium Football Streaming Hub
+                Private Football Streaming Hub
               </p>
             </div>
           </div>
 
-          {/* Sports Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            <div className="flex items-center gap-6 text-sm font-medium">
-              <div className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Trophy className="w-4 h-4" />
-                <span>Matches</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Users className="w-4 h-4" />
-                <span>Teams</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Calendar className="w-4 h-4" />
-                <span>Schedule</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <TrendingUp className="w-4 h-4" />
-                <span>Stats</span>
-              </div>
-            </div>
-          </div>
 
           {/* Status indicators */}
           <div className="flex items-center gap-4">
