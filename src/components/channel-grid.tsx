@@ -28,6 +28,7 @@ const skyChannels: Channel[] = [
     number: "403", 
     description: "Football coverage from around the world",
     category: "Sky Sports",
+    thumbnailUrl: "/lovable-uploads/eeee4069-eeb9-41b8-ae45-046902ba4b3a.png",
     isLive: true
   },
   {
