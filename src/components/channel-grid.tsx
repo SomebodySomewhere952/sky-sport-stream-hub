@@ -89,25 +89,25 @@ export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   
-  // Single row layout for TV navigation (left/right only)
-  const GRID_COLS = skyChannels.length;
+  // Grid layout for TV navigation
+  const GRID_COLS = 4; // 4 columns on mobile, 8 on desktop
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
   
-  // Create navigation items for TV remote - single row layout
+  // Create navigation items for TV remote - grid layout
   const navigationItems: NavigationItem[] = useMemo(() => {
     const items: NavigationItem[] = [];
     const allChannels = [...skyChannelsData, ...tntChannelsData];
     
-    // Single row - each channel gets its own column (left/right navigation only)
+    // Grid layout - calculate row and column for each channel
     allChannels.forEach((channel, index) => {
       const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
       
       items.push({
         id: `${channelType}-${channel.number}`,
         element: null,
-        row: 0,
-        col: index
+        row: Math.floor(index / GRID_COLS),
+        col: index % GRID_COLS
       });
     });
     
@@ -185,29 +185,26 @@ export function ChannelGrid() {
         </p>
       </div>
 
-      {/* All Channels in Single Row */}
-      <div className="overflow-x-auto pb-4">
-        <div className="flex gap-6 min-w-max px-4">
-          {[...skyChannelsData, ...tntChannelsData].map((channel, index) => {
-            const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
-            return (
-              <div key={channel.number} className="flex-shrink-0">
-                <ChannelCard
-                  name={channel.name}
-                  number={channel.number}
-                  description={channel.description}
-                  category={channel.category}
-                  isLive={channel.isLive}
-                  streamUrl={channel.streamUrl}
-                  thumbnailUrl={channel.thumbnailUrl}
-                  onSelect={handleChannelSelect}
-                  isFocused={currentFocus === `${channelType}-${channel.number}`}
-                  tvNavigationId={`${channelType}-${channel.number}`}
-                />
-              </div>
-            );
-          })}
-        </div>
+      {/* All Channels in Grid Layout */}
+      <div className="grid grid-cols-4 lg:grid-cols-8 gap-4 max-w-7xl mx-auto">
+        {[...skyChannelsData, ...tntChannelsData].map((channel, index) => {
+          const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+          return (
+            <ChannelCard
+              key={channel.number}
+              name={channel.name}
+              number={channel.number}
+              description={channel.description}
+              category={channel.category}
+              isLive={channel.isLive}
+              streamUrl={channel.streamUrl}
+              thumbnailUrl={channel.thumbnailUrl}
+              onSelect={handleChannelSelect}
+              isFocused={currentFocus === `${channelType}-${channel.number}`}
+              tvNavigationId={`${channelType}-${channel.number}`}
+            />
+          );
+        })}
       </div>
 
       {/* Selected channel info */}
