@@ -87,15 +87,6 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
         </div>
       </div>
 
-      {/* Skip button */}
-      <button
-        onClick={handleSkip}
-        className={`absolute bottom-8 right-8 text-muted-foreground hover:text-foreground transition-all duration-300 ${
-          logoVisible ? 'opacity-70 hover:opacity-100' : 'opacity-0'
-        }`}
-      >
-        <span className="text-sm">Skip intro</span>
-      </button>
 
       {/* Loading indicator */}
       <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-opacity duration-1000 ${

@@ -107,12 +107,6 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
           />
         </div>
         
-        {/* Loading overlay */}
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-          <div className="bg-black/80 rounded-lg px-4 py-2">
-            <p className="text-white text-sm font-medium">Live Stream</p>
-          </div>
-        </div>
       </Card>
 
       {/* Stream Info */}
