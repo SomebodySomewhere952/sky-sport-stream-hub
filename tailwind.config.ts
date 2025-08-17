@@ -52,6 +52,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// TV-specific colors
+				'tv-focus': 'hsl(var(--tv-focus))',
+				'tv-glow': 'hsl(var(--tv-glow))',
+				'sports-red': 'hsl(var(--sports-red))',
+				'sports-green': 'hsl(var(--sports-green))',
+				'sports-orange': 'hsl(var(--sports-orange))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -84,11 +90,34 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'glow-pulse': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px hsl(var(--tv-glow) / 0.5)'
+					},
+					'50%': {
+						boxShadow: '0 0 40px hsl(var(--tv-glow) / 0.8), 0 0 60px hsl(var(--tv-glow) / 0.4)'
+					}
+				},
+				'scale-focus': {
+					'0%': {
+						transform: 'scale(1)'
+					},
+					'100%': {
+						transform: 'scale(1.05)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+				'scale-focus': 'scale-focus 0.2s ease-out forwards'
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-sports': 'var(--gradient-sports)',
+				'gradient-glow': 'var(--gradient-glow)'
 			}
 		}
 	},
