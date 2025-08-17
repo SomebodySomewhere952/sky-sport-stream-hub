@@ -148,21 +148,64 @@ export function ChannelGrid() {
         </p>
       </div>
 
-      {/* Channel grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {skyChannels.map((channel) => (
-          <ChannelCard
-            key={channel.number}
-            name={channel.name}
-            number={channel.number}
-            description={channel.description}
-            category={channel.category}
-            isLive={channel.isLive}
-            streamUrl={channel.streamUrl}
-            thumbnailUrl={channel.thumbnailUrl}
-            onSelect={handleChannelSelect}
-          />
-        ))}
+      {/* Live Match Section */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-bold text-foreground mb-6">Featured Match</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {skyChannels.filter(channel => channel.category === "Premier League").map((channel) => (
+            <ChannelCard
+              key={channel.number}
+              name={channel.name}
+              number={channel.number}
+              description={channel.description}
+              category={channel.category}
+              isLive={channel.isLive}
+              streamUrl={channel.streamUrl}
+              thumbnailUrl={channel.thumbnailUrl}
+              onSelect={handleChannelSelect}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Sky Sports Section */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-bold text-foreground mb-6">Sky Sports</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {skyChannels.filter(channel => channel.category === "Sky Sports").map((channel) => (
+            <ChannelCard
+              key={channel.number}
+              name={channel.name}
+              number={channel.number}
+              description={channel.description}
+              category={channel.category}
+              isLive={channel.isLive}
+              streamUrl={channel.streamUrl}
+              thumbnailUrl={channel.thumbnailUrl}
+              onSelect={handleChannelSelect}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* TNT Sports Section */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-bold text-foreground mb-6">TNT Sports</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {skyChannels.filter(channel => channel.category === "TNT Sports").map((channel) => (
+            <ChannelCard
+              key={channel.number}
+              name={channel.name}
+              number={channel.number}
+              description={channel.description}
+              category={channel.category}
+              isLive={channel.isLive}
+              streamUrl={channel.streamUrl}
+              thumbnailUrl={channel.thumbnailUrl}
+              onSelect={handleChannelSelect}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Selected channel info */}
