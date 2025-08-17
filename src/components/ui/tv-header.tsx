@@ -34,8 +34,8 @@ export function TvHeader() {
               Subscription Expires: Never
             </Badge>
             <div className="text-right space-y-1">
-              <div className="text-xs text-muted-foreground uppercase tracking-wider">Platform</div>
-              <div className="text-sm font-bold text-foreground">FireTV</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Logged In As</div>
+              <div className="text-sm font-bold text-foreground">Admin</div>
             </div>
           </div>
         </div>
