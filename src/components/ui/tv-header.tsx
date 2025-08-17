@@ -9,11 +9,11 @@ export function TvHeader() {
           {/* Logo and branding */}
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
-              <img src="/lovable-uploads/58c339d4-c3f5-4920-ae97-9dd7593c45a0.png" alt="127 Streaming Logo" className="w-full h-full object-contain" />
+              <img src="/lovable-uploads/6dd9b86e-b150-49c9-8ff2-5609ecc9bc3a.png" alt="127 Football Live Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">127</h1>
-              <p className="text-muted-foreground">Live Sports Streaming</p>
+              <p className="text-muted-foreground">Football Live Streaming</p>
             </div>
           </div>
 

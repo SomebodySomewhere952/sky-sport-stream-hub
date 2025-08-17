@@ -36,8 +36,8 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
       <div className="fixed inset-0 bg-background z-50 flex items-center justify-center animate-fade-out">
         <div className={`transition-all duration-1000 ${logoVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           <img 
-            src="/lovable-uploads/1b1f72ff-5175-49b2-a9a4-015dc15fe6d4.png" 
-            alt="127 Streaming Logo" 
+            src="/lovable-uploads/6dd9b86e-b150-49c9-8ff2-5609ecc9bc3a.png" 
+            alt="127 Football Live Logo" 
             className="w-64 h-64 object-contain"
           />
         </div>
@@ -60,8 +60,8 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
           }`}
         >
           <img 
-            src="/lovable-uploads/1b1f72ff-5175-49b2-a9a4-015dc15fe6d4.png" 
-            alt="127 Streaming Logo" 
+            src="/lovable-uploads/6dd9b86e-b150-49c9-8ff2-5609ecc9bc3a.png" 
+            alt="127 Football Live Logo" 
             className="w-64 h-64 object-contain filter drop-shadow-2xl"
           />
         </div>
