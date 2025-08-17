@@ -20,6 +20,7 @@ const skyChannels: Channel[] = [
     number: "402",
     description: "Premier League matches and analysis",
     category: "Sky Sports",
+    thumbnailUrl: "/lovable-uploads/ce6449f8-283c-4726-88fe-b458b83f2f34.png",
     isLive: true
   },
   {
