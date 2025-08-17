@@ -77,43 +77,43 @@ export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({
       <div className="absolute inset-0 bg-black/70" />
       
       {/* Content */}
-      <div className="relative z-10 flex flex-col h-full p-6">
+      <div className="relative z-10 flex flex-col h-full p-4">
         {/* Header */}
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-              <Tv className="w-6 h-6 text-white" />
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+              <Tv className="w-4 h-4 text-white" />
             </div>
             <div>
-              <div className="text-sm text-white/80 font-medium">CH {number}</div>
-              <h3 className="text-lg font-bold text-white leading-tight">{name}</h3>
+              <div className="text-xs text-white/80 font-medium">CH {number}</div>
+              <h3 className="text-sm font-bold text-white leading-tight">{name}</h3>
             </div>
           </div>
           
           {isLive && (
-            <Badge variant="destructive" className="animate-pulse">
-              <div className="w-2 h-2 bg-current rounded-full mr-1" />
+            <Badge variant="destructive" className="animate-pulse text-xs">
+              <div className="w-1.5 h-1.5 bg-current rounded-full mr-1" />
               LIVE
             </Badge>
           )}
         </div>
 
         {/* Description */}
-        <p className="text-sm text-white/80 mb-4 flex-1 line-clamp-2">
+        <p className="text-xs text-white/80 mb-3 flex-1 line-clamp-2">
           {description}
         </p>
 
         {/* Footer */}
         <div className="flex items-center justify-between">
           <Badge 
-            className={`${categoryColors[category]} text-white font-medium px-3 py-1`}
+            className={`${categoryColors[category]} text-white font-medium px-2 py-0.5 text-xs`}
           >
             {category}
           </Badge>
           
-          <div className="flex items-center gap-2 text-white">
-            <Play className="w-4 h-4" />
-            <span className="text-sm font-medium">Watch</span>
+          <div className="flex items-center gap-1.5 text-white">
+            <Play className="w-3 h-3" />
+            <span className="text-xs font-medium">Watch</span>
           </div>
         </div>
       </div>
