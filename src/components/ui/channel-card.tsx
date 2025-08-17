@@ -8,7 +8,7 @@ interface ChannelCardProps {
   number: string;
   description: string;
   isLive?: boolean;
-  category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News";
+  category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News" | "Sky Sports" | "TNT Sports";
   streamUrl?: string;
   thumbnailUrl?: string;
   onSelect: (channel: { name: string; number: string; streamUrl?: string }) => void;
@@ -20,7 +20,9 @@ const categoryColors = {
   "Cricket": "bg-sports-green", 
   "F1": "bg-sports-orange",
   "Golf": "bg-accent",
-  "News": "bg-secondary"
+  "News": "bg-secondary",
+  "Sky Sports": "bg-blue-600",
+  "TNT Sports": "bg-red-600"
 };
 
 export function ChannelCard({ 

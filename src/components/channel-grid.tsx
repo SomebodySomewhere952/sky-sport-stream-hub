@@ -7,7 +7,7 @@ interface Channel {
   name: string;
   number: string;
   description: string;
-  category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News";
+  category: "Premier League" | "Football" | "Cricket" | "F1" | "Golf" | "News" | "Sky Sports" | "TNT Sports";
   streamUrl?: string;
   thumbnailUrl?: string;
   isLive: boolean;
@@ -21,6 +21,64 @@ const skyChannels: Channel[] = [
     category: "Premier League",
     streamUrl: "https://fstv.online/match/manchester-united-vs-arsenal-football-1378977",
     thumbnailUrl: "/lovable-uploads/fdb7f44b-2abf-43ce-8086-d2d002bf1501.png",
+    isLive: true
+  },
+  // Sky Sports Channels
+  {
+    name: "Sky Sports Premier League",
+    number: "402",
+    description: "Premier League matches and analysis",
+    category: "Sky Sports",
+    isLive: true
+  },
+  {
+    name: "Sky Sports Football",
+    number: "403", 
+    description: "Football coverage from around the world",
+    category: "Sky Sports",
+    isLive: true
+  },
+  {
+    name: "Sky Sports Main Event",
+    number: "404",
+    description: "Major sporting events and highlights",
+    category: "Sky Sports",
+    isLive: true
+  },
+  // TNT Sports Channels
+  {
+    name: "TNT Sport 1",
+    number: "410",
+    description: "Premium sports entertainment",
+    category: "TNT Sports",
+    isLive: true
+  },
+  {
+    name: "TNT Sport 2", 
+    number: "411",
+    description: "Live sports coverage",
+    category: "TNT Sports",
+    isLive: true
+  },
+  {
+    name: "TNT Sport 3",
+    number: "412", 
+    description: "Sports action and events",
+    category: "TNT Sports",
+    isLive: true
+  },
+  {
+    name: "TNT Sport 4",
+    number: "413",
+    description: "Extended sports programming",
+    category: "TNT Sports", 
+    isLive: true
+  },
+  {
+    name: "TNT Sport 5",
+    number: "414",
+    description: "Sports highlights and analysis",
+    category: "TNT Sports",
     isLive: true
   }
 ];
@@ -84,9 +142,9 @@ export function ChannelGrid() {
     <div className="container mx-auto px-8 py-8">
       {/* Section header */}
       <div className="mb-8">
-        <h2 className="text-4xl font-bold text-foreground mb-2">Live Matches</h2>
+        <h2 className="text-4xl font-bold text-foreground mb-2">Live Channels</h2>
         <p className="text-xl text-muted-foreground">
-          Watch Manchester United vs Arsenal live
+          Choose from Sky Sports, TNT Sports and live matches
         </p>
       </div>
 
