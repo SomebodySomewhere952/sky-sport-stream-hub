@@ -13,7 +13,7 @@ export function TvHeader() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">127</h1>
-              <p className="text-muted-foreground">Football Live Streaming</p>
+              <p className="text-muted-foreground">Private Football Live Streaming</p>
             </div>
           </div>
 
