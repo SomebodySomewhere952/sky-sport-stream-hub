@@ -20,7 +20,7 @@ const skyChannels: Channel[] = [
     number: "402",
     description: "Premier League matches and analysis",
     category: "Sky Sports",
-    thumbnailUrl: "/lovable-uploads/ce6449f8-283c-4726-88fe-b458b83f2f34.png",
+    thumbnailUrl: "/lovable-uploads/64e172a6-3e48-4a2a-9a56-3e6b0700bb21.png",
     isLive: true
   },
   {
@@ -28,7 +28,7 @@ const skyChannels: Channel[] = [
     number: "403", 
     description: "Football coverage from around the world",
     category: "Sky Sports",
-    thumbnailUrl: "/lovable-uploads/eeee4069-eeb9-41b8-ae45-046902ba4b3a.png",
+    thumbnailUrl: "/lovable-uploads/64e172a6-3e48-4a2a-9a56-3e6b0700bb21.png",
     isLive: true
   },
   {
