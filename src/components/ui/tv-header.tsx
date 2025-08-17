@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Zap } from "lucide-react";
-import logo127 from "@/assets/logo-127.png";
 
 export function TvHeader() {
   return (
@@ -10,7 +9,7 @@ export function TvHeader() {
           {/* Logo and branding */}
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
-              <img src={logo127} alt="127 Logo" className="w-full h-full object-contain" />
+              <img src="/lovable-uploads/58c339d4-c3f5-4920-ae97-9dd7593c45a0.png" alt="127 Streaming Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">127</h1>
