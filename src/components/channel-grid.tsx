@@ -92,29 +92,19 @@ export function ChannelGrid() {
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
   
-  // Create navigation items for TV remote
+  // Create navigation items for TV remote - treat all channels as one continuous sequence
   const navigationItems: NavigationItem[] = useMemo(() => {
     const items: NavigationItem[] = [];
+    const allChannels = [...skyChannelsData, ...tntChannelsData];
     
-    // Add Sky Sports channels
-    skyChannelsData.forEach((channel, index) => {
+    // Create a single continuous sequence for better navigation
+    allChannels.forEach((channel, index) => {
       const row = Math.floor(index / GRID_COLS);
       const col = index % GRID_COLS;
+      const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+      
       items.push({
-        id: `sky-${channel.number}`,
-        element: null,
-        row,
-        col
-      });
-    });
-    
-    // Add TNT Sports channels (continuing from Sky Sports)
-    const skyRows = Math.ceil(skyChannelsData.length / GRID_COLS);
-    tntChannelsData.forEach((channel, index) => {
-      const row = skyRows + Math.floor(index / GRID_COLS);
-      const col = index % GRID_COLS;
-      items.push({
-        id: `tnt-${channel.number}`,
+        id: `${channelType}-${channel.number}`,
         element: null,
         row,
         col
@@ -129,7 +119,8 @@ export function ChannelGrid() {
     gridCols: GRID_COLS,
     onSelect: (id) => {
       const channelNumber = id.split('-')[1];
-      const channel = skyChannels.find(c => c.number === channelNumber);
+      const allChannels = [...skyChannelsData, ...tntChannelsData];
+      const channel = allChannels.find(c => c.number === channelNumber);
       if (channel) {
         handleChannelSelect(channel);
       }
