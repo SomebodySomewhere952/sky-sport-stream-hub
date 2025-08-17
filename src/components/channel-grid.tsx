@@ -78,6 +78,7 @@ const skyChannels: Channel[] = [
     number: "414",
     description: "Sports highlights and analysis",
     category: "TNT Sports",
+    streamUrl: "https://embedsforlife.online/embed/78cf7998-3cda-11f0-afb1-ecf4bbdafde4",
     thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   }
@@ -129,21 +130,31 @@ export function ChannelGrid() {
     if (fullChannel) {
       setSelectedChannel(fullChannel);
       
-      // Show toast notification
-      toast({
-        title: `Opening ${channel.name}`,
-        description: `Channel ${channel.number} - Loading live stream...`,
-      });
+      // Auto-start stream for TNT Sport 5 or any channel with streamUrl
+      if (fullChannel.streamUrl) {
+        window.open(fullChannel.streamUrl, '_blank');
+        
+        toast({
+          title: `Starting ${channel.name}`,
+          description: `Channel ${channel.number} - Stream opening in new tab...`,
+        });
+      } else {
+        // Show toast notification for channels without stream
+        toast({
+          title: `Opening ${channel.name}`,
+          description: `Channel ${channel.number} - Loading live stream...`,
+        });
+
+        setTimeout(() => {
+          toast({
+            title: "Stream Ready",
+            description: `Now watching ${channel.name} live!`,
+          });
+        }, 2000);
+      }
 
       // Show selection info
       console.log(`Opening stream: ${channel.streamUrl}`);
-      
-      setTimeout(() => {
-        toast({
-          title: "Stream Ready",
-          description: `Now watching ${channel.name} live!`,
-        });
-      }, 2000);
     }
   };
 
