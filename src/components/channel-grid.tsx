@@ -84,7 +84,7 @@ export function ChannelGrid() {
     <div className="container mx-auto px-8 py-8">
       {/* Section header */}
       <div className="mb-8">
-        <h2 className="text-4xl font-bold text-foreground mb-2">Live Match</h2>
+        <h2 className="text-4xl font-bold text-foreground mb-2">Live Matches</h2>
         <p className="text-xl text-muted-foreground">
           Watch Manchester United vs Arsenal live
         </p>

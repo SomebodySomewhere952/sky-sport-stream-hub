@@ -69,7 +69,7 @@ export function ChannelCard({
       )}
       
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/70" />
       
       {/* Content */}
       <div className="relative z-10 flex flex-col h-full p-6">
