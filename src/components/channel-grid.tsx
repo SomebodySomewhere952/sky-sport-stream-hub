@@ -1,4 +1,5 @@
 import { ChannelCard } from "@/components/ui/channel-card";
+import { VideoPlayer } from "@/components/video-player";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 
@@ -80,6 +81,7 @@ const skyChannels: Channel[] = [
 
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
 
   const handleChannelSelect = (channel: { name: string; number: string; streamUrl?: string }) => {
     const fullChannel = skyChannels.find(c => c.number === channel.number);
@@ -92,18 +94,45 @@ export function ChannelGrid() {
         description: `Channel ${channel.number} - Loading live stream...`,
       });
 
-      // In a real app, this would open the stream
-      console.log(`Opening stream: ${channel.streamUrl}`);
-      
-      // Simulate stream opening with a delay
-      setTimeout(() => {
-        toast({
-          title: "Stream Ready",
-          description: `Now watching ${channel.name} live!`,
-        });
-      }, 2000);
+      // If it's channel 401, show the video player
+      if (channel.number === "401") {
+        setShowVideoPlayer(true);
+        
+        setTimeout(() => {
+          toast({
+            title: "Stream Ready",
+            description: `Now watching ${channel.name} live!`,
+          });
+        }, 1500);
+      } else {
+        // For other channels, just show the selection info
+        console.log(`Opening stream: ${channel.streamUrl}`);
+        
+        setTimeout(() => {
+          toast({
+            title: "Stream Ready",
+            description: `Now watching ${channel.name} live!`,
+          });
+        }, 2000);
+      }
     }
   };
+
+  const handleBackToChannels = () => {
+    setShowVideoPlayer(false);
+    setSelectedChannel(null);
+  };
+
+  // Show video player for channel 401
+  if (showVideoPlayer && selectedChannel?.number === "401") {
+    return (
+      <VideoPlayer
+        channelName={selectedChannel.name}
+        channelNumber={selectedChannel.number}
+        onBack={handleBackToChannels}
+      />
+    );
+  }
 
   return (
     <div className="container mx-auto px-8 py-8">
