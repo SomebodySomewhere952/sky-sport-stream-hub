@@ -45,6 +45,7 @@ const skyChannels: Channel[] = [
     number: "410",
     description: "Premium sports entertainment",
     category: "TNT Sports",
+    thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
   {
@@ -52,6 +53,7 @@ const skyChannels: Channel[] = [
     number: "411",
     description: "Live sports coverage",
     category: "TNT Sports",
+    thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
   {
@@ -59,13 +61,15 @@ const skyChannels: Channel[] = [
     number: "412", 
     description: "Sports action and events",
     category: "TNT Sports",
+    thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
   {
     name: "TNT Sport 4",
     number: "413",
     description: "Extended sports programming",
-    category: "TNT Sports", 
+    category: "TNT Sports",
+    thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   },
   {
@@ -73,6 +77,7 @@ const skyChannels: Channel[] = [
     number: "414",
     description: "Sports highlights and analysis",
     category: "TNT Sports",
+    thumbnailUrl: "/lovable-uploads/813e172d-9942-44f6-9249-16293b387d7e.png",
     isLive: true
   }
 ];
