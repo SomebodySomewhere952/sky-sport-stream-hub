@@ -7,16 +7,15 @@ import { ArrowLeft, Maximize, Volume2, VolumeX, RotateCcw } from "lucide-react";
 interface VideoPlayerProps {
   channelName: string;
   channelNumber: string;
+  streamUrl: string;
   onBack: () => void;
 }
 
-export function VideoPlayer({ channelName, channelNumber, onBack }: VideoPlayerProps) {
+export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: VideoPlayerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  const streamUrl = "https://fstv.online/match/manchester-united-vs-arsenal-football-1378977";
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement && containerRef.current) {
@@ -100,16 +99,15 @@ export function VideoPlayer({ channelName, channelNumber, onBack }: VideoPlayerP
         ref={containerRef}
         className="relative overflow-hidden bg-black"
       >
-        <div className="relative w-full flex items-center justify-center" style={{ paddingBottom: '56.25%' }}>
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/90">
-            <div className="text-center">
-              <h3 className="text-white text-xl font-bold mb-2">Stream Blocked by Browser</h3>
-              <p className="text-white/70 mb-4">Click "Open Stream" to watch in a new tab</p>
-              <Button onClick={openStream} className="bg-primary hover:bg-primary/90">
-                Open Live Stream
-              </Button>
-            </div>
-          </div>
+        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+          <iframe
+            ref={iframeRef}
+            src={streamUrl}
+            className="absolute inset-0 w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={`${channelName} Live Stream`}
+          />
         </div>
         
         {/* Loading overlay */}

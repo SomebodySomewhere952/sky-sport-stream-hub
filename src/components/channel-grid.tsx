@@ -86,6 +86,7 @@ const skyChannels: Channel[] = [
 
 export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   
   // Single column layout for TV navigation
   const GRID_COLS = 1;
@@ -130,13 +131,13 @@ export function ChannelGrid() {
     if (fullChannel) {
       setSelectedChannel(fullChannel);
       
-      // Auto-start stream for TNT Sport 5 or any channel with streamUrl
+      // Show video player for channels with stream URL
       if (fullChannel.streamUrl) {
-        window.open(fullChannel.streamUrl, '_blank');
+        setShowVideoPlayer(true);
         
         toast({
           title: `Starting ${channel.name}`,
-          description: `Channel ${channel.number} - Stream opening in new tab...`,
+          description: `Channel ${channel.number} - Stream loading...`,
         });
       } else {
         // Show toast notification for channels without stream
@@ -157,6 +158,21 @@ export function ChannelGrid() {
       console.log(`Opening stream: ${channel.streamUrl}`);
     }
   };
+
+  // Show video player if selected
+  if (showVideoPlayer && selectedChannel?.streamUrl) {
+    return (
+      <VideoPlayer
+        channelName={selectedChannel.name}
+        channelNumber={selectedChannel.number}
+        streamUrl={selectedChannel.streamUrl}
+        onBack={() => {
+          setShowVideoPlayer(false);
+          setSelectedChannel(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="container mx-auto px-8 py-8">
