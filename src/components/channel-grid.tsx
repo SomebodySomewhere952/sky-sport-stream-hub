@@ -121,15 +121,7 @@ export function ChannelGrid() {
 
   const { currentFocus, setFocus } = useTvNavigation({
     items: navigationItems,
-    gridCols: GRID_COLS,
-    onSelect: (id) => {
-      const channelNumber = id.split('-')[1];
-      const allChannels = [...skyChannelsData, ...tntChannelsData];
-      const channel = allChannels.find(c => c.number === channelNumber);
-      if (channel) {
-        handleChannelSelect(channel);
-      }
-    }
+    gridCols: GRID_COLS
   });
 
   const handleChannelSelect = (channel: { name: string; number: string; streamUrl?: string }) => {
