@@ -35,7 +35,7 @@ export function TvHeader() {
             </Badge>
             <div className="text-right space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wider">Platform</div>
-              <div className="text-sm font-bold text-foreground">FireTV Ready</div>
+              <div className="text-sm font-bold text-foreground">FireTV</div>
             </div>
           </div>
         </div>

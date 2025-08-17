@@ -89,25 +89,25 @@ export function ChannelGrid() {
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   
-  // Single column layout for TV navigation
-  const GRID_COLS = 1;
+  // Single row layout for TV navigation (left/right only)
+  const GRID_COLS = skyChannels.length;
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
   
-  // Create navigation items for TV remote - single column layout
+  // Create navigation items for TV remote - single row layout
   const navigationItems: NavigationItem[] = useMemo(() => {
     const items: NavigationItem[] = [];
     const allChannels = [...skyChannelsData, ...tntChannelsData];
     
-    // Single column - each channel gets its own row
+    // Single row - each channel gets its own column (left/right navigation only)
     allChannels.forEach((channel, index) => {
       const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
       
       items.push({
         id: `${channelType}-${channel.number}`,
         element: null,
-        row: index,
-        col: 0
+        row: 0,
+        col: index
       });
     });
     
@@ -185,47 +185,28 @@ export function ChannelGrid() {
         </p>
       </div>
 
-      {/* Sky Sports Section */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-foreground mb-6 text-center">Sky Sports</h3>
-        <div className="flex flex-col gap-4 max-w-2xl mx-auto">
-          {skyChannelsData.map((channel) => (
-            <ChannelCard
-              key={channel.number}
-              name={channel.name}
-              number={channel.number}
-              description={channel.description}
-              category={channel.category}
-              isLive={channel.isLive}
-              streamUrl={channel.streamUrl}
-              thumbnailUrl={channel.thumbnailUrl}
-              onSelect={handleChannelSelect}
-              isFocused={currentFocus === `sky-${channel.number}`}
-              tvNavigationId={`sky-${channel.number}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* TNT Sports Section */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-foreground mb-6 text-center">TNT Sports</h3>
-        <div className="flex flex-col gap-4 max-w-2xl mx-auto">
-          {tntChannelsData.map((channel) => (
-            <ChannelCard
-              key={channel.number}
-              name={channel.name}
-              number={channel.number}
-              description={channel.description}
-              category={channel.category}
-              isLive={channel.isLive}
-              streamUrl={channel.streamUrl}
-              thumbnailUrl={channel.thumbnailUrl}
-              onSelect={handleChannelSelect}
-              isFocused={currentFocus === `tnt-${channel.number}`}
-              tvNavigationId={`tnt-${channel.number}`}
-            />
-          ))}
+      {/* All Channels in Single Row */}
+      <div className="overflow-x-auto pb-4">
+        <div className="flex gap-6 min-w-max px-4">
+          {[...skyChannelsData, ...tntChannelsData].map((channel, index) => {
+            const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+            return (
+              <div key={channel.number} className="flex-shrink-0">
+                <ChannelCard
+                  name={channel.name}
+                  number={channel.number}
+                  description={channel.description}
+                  category={channel.category}
+                  isLive={channel.isLive}
+                  streamUrl={channel.streamUrl}
+                  thumbnailUrl={channel.thumbnailUrl}
+                  onSelect={handleChannelSelect}
+                  isFocused={currentFocus === `${channelType}-${channel.number}`}
+                  tvNavigationId={`${channelType}-${channel.number}`}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
