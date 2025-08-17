@@ -31,7 +31,7 @@ export function TvHeader() {
           <div className="flex items-center gap-4">
             <Badge variant="outline" className="px-4 py-2 text-sm bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20">
               <Zap className="w-4 h-4 mr-2 animate-pulse" />
-              Live
+              Subscription Expires: Never
             </Badge>
             <div className="text-right space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wider">Platform</div>
