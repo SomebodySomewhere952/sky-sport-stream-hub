@@ -64,9 +64,6 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
               <h1 className="text-2xl font-bold text-foreground">
                 CH {channelNumber} - {channelName}
               </h1>
-              <p className="text-sm text-muted-foreground">
-                Manchester United vs Arsenal - Premier League
-              </p>
             </div>
           </div>
         </div>
@@ -119,16 +116,7 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
       </Card>
 
       {/* Stream Info */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="p-4">
-          <h3 className="font-semibold text-sm text-muted-foreground mb-2">MATCH INFO</h3>
-          <div className="space-y-1">
-            <p className="text-sm"><strong>Date:</strong> 17/08/2025</p>
-            <p className="text-sm"><strong>Venue:</strong> Old Trafford</p>
-            <p className="text-sm"><strong>Location:</strong> Manchester</p>
-          </div>
-        </Card>
-        
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="p-4">
           <h3 className="font-semibold text-sm text-muted-foreground mb-2">STREAM QUALITY</h3>
           <div className="space-y-1">
