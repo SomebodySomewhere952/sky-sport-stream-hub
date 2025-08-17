@@ -135,24 +135,6 @@ export function ChannelGrid() {
       // Show video player for channels with stream URL
       if (fullChannel.streamUrl) {
         setShowVideoPlayer(true);
-        
-        toast({
-          title: `Starting ${channel.name}`,
-          description: `Channel ${channel.number} - Stream loading...`,
-        });
-      } else {
-        // Show toast notification for channels without stream
-        toast({
-          title: `Opening ${channel.name}`,
-          description: `Channel ${channel.number} - Loading live stream...`,
-        });
-
-        setTimeout(() => {
-          toast({
-            title: "Stream Ready",
-            description: `Now watching ${channel.name} live!`,
-          });
-        }, 2000);
       }
 
       // Show selection info
