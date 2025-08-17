@@ -28,10 +28,8 @@ export function VideoPlayer({ channelName, channelNumber, onBack }: VideoPlayerP
     }
   };
 
-  const refreshStream = () => {
-    if (iframeRef.current) {
-      iframeRef.current.src = iframeRef.current.src;
-    }
+  const openStream = () => {
+    window.open(streamUrl, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {
@@ -78,11 +76,11 @@ export function VideoPlayer({ channelName, channelNumber, onBack }: VideoPlayerP
           <Button
             variant="outline"
             size="sm"
-            onClick={refreshStream}
+            onClick={openStream}
             className="flex items-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
-            Refresh
+            Open Stream
           </Button>
           
           <Button
@@ -102,15 +100,16 @@ export function VideoPlayer({ channelName, channelNumber, onBack }: VideoPlayerP
         ref={containerRef}
         className="relative overflow-hidden bg-black"
       >
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-          <iframe
-            ref={iframeRef}
-            src={streamUrl}
-            className="absolute top-0 left-0 w-full h-full border-0"
-            allowFullScreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            title={`${channelName} Live Stream`}
-          />
+        <div className="relative w-full flex items-center justify-center" style={{ paddingBottom: '56.25%' }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/90">
+            <div className="text-center">
+              <h3 className="text-white text-xl font-bold mb-2">Stream Blocked by Browser</h3>
+              <p className="text-white/70 mb-4">Click "Open Stream" to watch in a new tab</p>
+              <Button onClick={openStream} className="bg-primary hover:bg-primary/90">
+                Open Live Stream
+              </Button>
+            </div>
+          </div>
         </div>
         
         {/* Loading overlay */}
