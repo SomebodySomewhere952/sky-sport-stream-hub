@@ -161,11 +161,6 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </span>
           </div>
         </div>
-
-        {/* Skip hint */}
-        <div className="text-center mt-8 opacity-60">
-          <span className="text-sm">Press ENTER to skip</span>
-        </div>
       </div>
     </div>
   );
