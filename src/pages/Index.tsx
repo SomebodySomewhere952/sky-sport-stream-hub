@@ -1,6 +1,8 @@
+
 import { useState } from "react";
-import { TvHeader } from "@/components/ui/tv-header";
-import { ChannelGrid } from "@/components/channel-grid";
+import { TopNavigation } from "@/components/ui/top-navigation";
+import { SidebarCategories } from "@/components/ui/sidebar-categories";
+import { ModernChannelGrid } from "@/components/modern-channel-grid";
 import { IntroScreen } from "@/components/intro-screen";
 
 const Index = () => {
@@ -12,10 +14,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <TvHeader />
-      <main>
-        <ChannelGrid />
-      </main>
+      <TopNavigation />
+      <div className="flex">
+        <SidebarCategories />
+        <ModernChannelGrid />
+      </div>
     </div>
   );
 };
