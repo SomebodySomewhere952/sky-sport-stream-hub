@@ -38,8 +38,12 @@ export function TopNavigation() {
           <Search className="w-5 h-5" />
         </button>
         <Badge variant="outline" className="px-3 py-1 bg-green-500/10 border-green-500/30 text-green-400">
-          Premium
+          Subscription Expires: Never
         </Badge>
+        <div className="text-right space-y-1">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider">Logged In As</div>
+          <div className="text-sm font-bold text-foreground">Admin</div>
+        </div>
       </div>
     </nav>
   );
