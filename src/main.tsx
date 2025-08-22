@@ -1,5 +1,19 @@
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
+import App from './App.tsx'
+import { applyTvOptimizations, logPerformanceMetrics } from './utils/device-detection'
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Apply TV optimizations before rendering
+applyTvOptimizations();
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+// Log performance metrics for debugging
+if (import.meta.env.DEV) {
+  logPerformanceMetrics();
+}

@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Play, Tv } from "lucide-react";
@@ -21,7 +21,7 @@ const categoryColors = {
   "TNT Sports": "bg-red-600"
 };
 
-export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({ 
+export const ChannelCard = memo(forwardRef<HTMLDivElement, ChannelCardProps>(({ 
   name, 
   number, 
   description, 
@@ -47,12 +47,12 @@ export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({
       role="button"
       aria-selected={isFocused}
       className={`
-        relative overflow-hidden cursor-pointer p-0 h-32 w-full tv-focusable
-        transition-all duration-200 ease-out
-        hover:scale-105 hover:shadow-2xl
-        focus:scale-105 focus:shadow-2xl focus:ring-4 focus:ring-primary/50
-        bg-card border-border/50 backdrop-blur-sm
-        ${isFocused ? 'ring-4 ring-primary/70 scale-105 shadow-2xl' : ''}
+        performance-optimized relative overflow-hidden cursor-pointer p-0 h-32 w-full tv-focusable
+        transition-transform duration-150 ease-out
+        hover:scale-105
+        focus:scale-102
+        bg-card border-border/50
+        ${isFocused ? 'ring-2 ring-primary scale-102' : ''}
       `}
       onClick={handleSelect}
       onFocus={() => setInternalFocused(true)}
@@ -125,6 +125,6 @@ export const ChannelCard = forwardRef<HTMLDivElement, ChannelCardProps>(({
       `} />
     </Card>
   );
-});
+}));
 
 ChannelCard.displayName = "ChannelCard";

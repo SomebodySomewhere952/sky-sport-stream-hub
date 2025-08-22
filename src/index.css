@@ -215,13 +215,57 @@ body.fire-tv {
   -ms-user-select: none;
   user-select: none;
   
-  /* Optimize scrolling */
+  /* Optimize scrolling and rendering */
   -webkit-overflow-scrolling: touch;
+  
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  /* Optimize rendering performance */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  
+  /* Reduce paint complexity */
+  contain: layout style paint;
 }
 
 body.fire-tv * {
   /* Prevent focus outline flicker */
   -webkit-tap-highlight-color: transparent;
+  
+  /* Hardware acceleration for all elements */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Disable expensive effects on Fire TV */
+body.fire-tv .backdrop-blur-md {
+  backdrop-filter: none !important;
+  background-color: hsl(var(--card)) !important;
+}
+
+body.fire-tv .animate-pulse {
+  animation: none !important;
+}
+
+body.fire-tv .shadow-2xl,
+body.fire-tv .shadow-xl,
+body.fire-tv .shadow-lg {
+  box-shadow: none !important;
+}
+
+/* Simplified transitions for TV */
+body.fire-tv * {
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out !important;
+}
+
+/* Optimized focus states for TV */
+body.fire-tv .tv-focusable:focus {
+  transform: scale(1.02) !important;
+  outline: 3px solid hsl(var(--tv-focus)) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
 }
 
 /* TV mode general optimizations */

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useMemo } from 'react';
 
 export interface NavigationItem {
   id: string;
@@ -69,7 +69,13 @@ export function useTvNavigation({
     return false;
   }, [items]);
 
+  // Debounced navigation for better performance on TV devices
+  const lastNavigationTime = useRef<number>(0);
+  const NAVIGATION_THROTTLE = 150; // ms
+
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    const now = Date.now();
+    
     const key = (event as any).key as string | undefined;
     const code = (event as any).keyCode ?? (event as any).which;
 
@@ -78,6 +84,13 @@ export function useTvNavigation({
     const isBack = (key === 'Escape' || key === 'Backspace') || [4, 8, 27].includes(code);
 
     if (isArrow) {
+      // Throttle navigation to prevent rapid-fire navigation on TV remotes
+      if (now - lastNavigationTime.current < NAVIGATION_THROTTLE) {
+        event.preventDefault();
+        return;
+      }
+      lastNavigationTime.current = now;
+
       const currentId = currentFocusRef.current;
       let prevented = false;
 
@@ -103,6 +116,13 @@ export function useTvNavigation({
     }
 
     if (isSelect) {
+      // Debounce select events to prevent double-selections
+      if (now - lastNavigationTime.current < 300) {
+        event.preventDefault();
+        return;
+      }
+      lastNavigationTime.current = now;
+
       if (currentFocusRef.current && onSelect) {
         onSelect(currentFocusRef.current);
         event.preventDefault();

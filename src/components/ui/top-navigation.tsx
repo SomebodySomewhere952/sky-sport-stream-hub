@@ -4,10 +4,10 @@ import { Search } from "lucide-react";
 
 export function TopNavigation() {
   return (
-    <nav className="flex items-center justify-between px-8 py-4 bg-card/50 backdrop-blur-md border-b border-border/30">
+    <nav className="performance-optimized flex items-center justify-between px-8 py-4 bg-card backdrop-blur-none border-b border-border/30">
       {/* Logo */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border border-primary/20">
+        <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/20">
           <img src="/lovable-uploads/6dd9b86e-b150-49c9-8ff2-5609ecc9bc3a.png" alt="127 Sports" className="w-full h-full object-contain" />
         </div>
         <span className="text-xl font-bold">127 SPORTS</span>
