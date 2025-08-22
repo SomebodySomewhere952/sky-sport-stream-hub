@@ -1,6 +1,6 @@
 
 import { Badge } from "@/components/ui/badge";
-import { Search, Settings } from "lucide-react";
+import { Search } from "lucide-react";
 
 export function TopNavigation() {
   return (
@@ -31,9 +31,6 @@ export function TopNavigation() {
 
       {/* Right Side */}
       <div className="flex items-center gap-4">
-        <button className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center hover:bg-muted transition-colors">
-          <Settings className="w-5 h-5" />
-        </button>
         <button className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center hover:bg-muted transition-colors">
           <Search className="w-5 h-5" />
         </button>
