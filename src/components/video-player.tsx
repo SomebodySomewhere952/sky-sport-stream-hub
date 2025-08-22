@@ -17,6 +17,16 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // Auto-enter fullscreen when component mounts for TV-like experience
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.requestFullscreen().catch(() => {
+        // Fallback if fullscreen not supported
+        console.log('Fullscreen not supported');
+      });
+    }
+  }, []);
+
   const toggleFullscreen = () => {
     if (!document.fullscreenElement && containerRef.current) {
       containerRef.current.requestFullscreen();
@@ -36,101 +46,75 @@ export function VideoPlayer({ channelName, channelNumber, streamUrl, onBack }: V
       setIsFullscreen(!!document.fullscreenElement);
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onBack();
+      }
+    };
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onBack]);
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onBack}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Channels
-          </Button>
-          
-          <div className="flex items-center gap-3">
-            <Badge variant="destructive" className="animate-pulse">
-              <div className="w-2 h-2 bg-current rounded-full mr-1" />
-              LIVE
-            </Badge>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">
-                CH {channelNumber} - {channelName}
-              </h1>
+    <div className="fixed inset-0 z-50 bg-black">
+      {/* Overlay Controls - only show when not in fullscreen */}
+      {!isFullscreen && (
+        <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onBack}
+              className="flex items-center gap-2 bg-black/70 hover:bg-black/90 text-white border-white/20"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </Button>
+            
+            <div className="flex items-center gap-3">
+              <Badge variant="destructive" className="animate-pulse">
+                <div className="w-2 h-2 bg-current rounded-full mr-1" />
+                LIVE
+              </Badge>
+              <div className="text-white">
+                <h1 className="text-xl font-bold">
+                  CH {channelNumber} - {channelName}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={openStream}
-            className="flex items-center gap-2"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Open Stream
-          </Button>
-          
-          <Button
-            variant="outline"
+            variant="secondary"
             size="sm"
             onClick={toggleFullscreen}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-black/70 hover:bg-black/90 text-white border-white/20"
           >
             <Maximize className="w-4 h-4" />
             Fullscreen
           </Button>
         </div>
-      </div>
+      )}
 
-      {/* Video Player */}
-      <Card 
+      {/* Video Player - Full Screen */}
+      <div 
         ref={containerRef}
-        className="relative overflow-hidden bg-black"
+        className="w-full h-full"
       >
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-          <iframe
-            ref={iframeRef}
-            src={`${streamUrl}?autoplay=1&muted=0&controls=1`}
-            className="absolute inset-0 w-full h-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            allowFullScreen
-            title={`${channelName} Live Stream`}
-          />
-        </div>
-        
-      </Card>
-
-      {/* Stream Info */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="p-4">
-          <h3 className="font-semibold text-sm text-muted-foreground mb-2">STREAM QUALITY</h3>
-          <div className="space-y-1">
-            <p className="text-sm"><strong>Resolution:</strong> HD 1080p</p>
-            <p className="text-sm"><strong>Bitrate:</strong> Adaptive</p>
-            <p className="text-sm"><strong>Latency:</strong> Low</p>
-          </div>
-        </Card>
-        
-        <Card className="p-4">
-          <h3 className="font-semibold text-sm text-muted-foreground mb-2">HELP</h3>
-          <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">
-              If stream doesn't load, try refreshing or disable ad blocker
-            </p>
-            <p className="text-xs text-muted-foreground">
-              For best experience use Firefox browser
-            </p>
-          </div>
-        </Card>
+        <iframe
+          ref={iframeRef}
+          src={`${streamUrl}?autoplay=1&muted=0&controls=1`}
+          className="w-full h-full border-0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowFullScreen
+          title={`${channelName} Live Stream`}
+        />
       </div>
     </div>
   );
