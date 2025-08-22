@@ -4,12 +4,25 @@ import { TopNavigation } from "@/components/ui/top-navigation";
 import { SidebarCategories } from "@/components/ui/sidebar-categories";
 import { ModernChannelGrid } from "@/components/modern-channel-grid";
 import { IntroScreen } from "@/components/intro-screen";
+import { LoadingScreen } from "@/components/loading-screen";
 
 const Index = () => {
-  const [showIntro, setShowIntro] = useState(true);
+  const [currentScreen, setCurrentScreen] = useState<'intro' | 'loading' | 'main'>('intro');
 
-  if (showIntro) {
-    return <IntroScreen onComplete={() => setShowIntro(false)} />;
+  const handleIntroComplete = () => {
+    setCurrentScreen('loading');
+  };
+
+  const handleLoadingComplete = () => {
+    setCurrentScreen('main');
+  };
+
+  if (currentScreen === 'intro') {
+    return <IntroScreen onComplete={handleIntroComplete} />;
+  }
+
+  if (currentScreen === 'loading') {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
   return (
