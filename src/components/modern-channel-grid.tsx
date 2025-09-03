@@ -1,8 +1,9 @@
 
+import { useMemo, useCallback, useState, useEffect } from "react";
 import { ChannelCard } from "@/components/ui/channel-card";
 import { VideoPlayer } from "@/components/video-player";
-import { useState, useMemo } from "react";
-import { useTvNavigation, NavigationItem } from "@/hooks/use-tv-navigation";
+import { useTvNavigationSection } from "@/hooks/use-fire-tv-navigation";
+import { isTvDevice } from "@/utils/device-detection";
 
 interface Channel {
   name: string;
@@ -95,29 +96,50 @@ export function ModernChannelGrid() {
   const GRID_COLS = 4;
   const skyChannelsData = skyChannels.filter(channel => channel.category === "Sky Sports");
   const tntChannelsData = skyChannels.filter(channel => channel.category === "TNT Sports");
+  const allChannels = [...skyChannelsData, ...tntChannelsData];
   
-  const navigationItems: NavigationItem[] = useMemo(() => {
-    const items: NavigationItem[] = [];
-    const allChannels = [...skyChannelsData, ...tntChannelsData];
-    
+  const { registerItem, unregisterItem } = useTvNavigationSection({
+    id: 'main',
+    name: 'Channel Grid',
+    priority: 2,
+    defaultFocus: allChannels[0] ? `${allChannels[0].category === "Sky Sports" ? "sky" : "tnt"}-${allChannels[0].number}` : undefined,
+  });
+
+  // Register all channel items with Fire TV navigation
+  useEffect(() => {
     allChannels.forEach((channel, index) => {
       const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+      const itemId = `${channelType}-${channel.number}`;
       
-      items.push({
-        id: `${channelType}-${channel.number}`,
-        element: null,
+      registerItem({
+        id: itemId,
+        element: null, // Will be set by ChannelCard component
+        section: 'main',
         row: Math.floor(index / GRID_COLS),
-        col: index % GRID_COLS
+        col: index % GRID_COLS,
+        focusable: true,
+        onSelect: () => handleChannelSelect({ 
+          name: channel.name, 
+          number: channel.number, 
+          streamUrl: channel.streamUrl 
+        }),
+        onBack: () => {
+          if (showVideoPlayer) {
+            setShowVideoPlayer(false);
+            setSelectedChannel(null);
+          }
+        }
       });
     });
-    
-    return items;
-  }, [skyChannelsData, tntChannelsData]);
 
-  const { currentFocus, setFocus } = useTvNavigation({
-    items: navigationItems,
-    gridCols: GRID_COLS
-  });
+    return () => {
+      allChannels.forEach((channel) => {
+        const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+        const itemId = `${channelType}-${channel.number}`;
+        unregisterItem(itemId);
+      });
+    };
+  }, [allChannels, registerItem, unregisterItem, showVideoPlayer]);
 
   const handleChannelSelect = (channel: { name: string; number: string; streamUrl?: string }) => {
     const fullChannel = skyChannels.find(c => c.number === channel.number);
@@ -153,9 +175,11 @@ export function ModernChannelGrid() {
         <p className="text-muted-foreground">Premium sports content available 24/7</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-6">
-        {[...skyChannelsData, ...tntChannelsData].map((channel, index) => {
+      <div className={`grid grid-cols-4 gap-6 ${isTvDevice() ? 'tv-grid' : ''}`}>
+        {allChannels.map((channel, index) => {
           const channelType = channel.category === "Sky Sports" ? "sky" : "tnt";
+          const itemId = `${channelType}-${channel.number}`;
+          
           return (
             <ChannelCard
               key={channel.number}
@@ -167,8 +191,7 @@ export function ModernChannelGrid() {
               streamUrl={channel.streamUrl}
               thumbnailUrl={channel.thumbnailUrl}
               onSelect={handleChannelSelect}
-              isFocused={currentFocus === `${channelType}-${channel.number}`}
-              tvNavigationId={`${channelType}-${channel.number}`}
+              tvNavigationId={itemId}
             />
           );
         })}
