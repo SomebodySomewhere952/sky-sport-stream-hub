@@ -47,7 +47,7 @@ export const ChannelCard = memo(forwardRef<HTMLDivElement, ChannelCardProps>(({
       role="button"
       aria-selected={isFocused}
       className={`
-        performance-optimized relative overflow-hidden cursor-pointer p-0 h-32 w-full tv-focusable
+        performance-optimized relative overflow-hidden cursor-pointer p-0 h-40 w-full tv-focusable
         transition-transform duration-150 ease-out
         hover:scale-105
         focus:scale-102
