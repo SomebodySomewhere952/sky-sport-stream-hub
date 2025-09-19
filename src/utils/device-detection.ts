@@ -73,9 +73,13 @@ export function applyTvOptimizations() {
         transform: translateZ(0);
       }
       
-      /* Reduce animation complexity on TV */
+      /* Reduce animation complexity on TV for non-critical animations */
       @media (hover: none) {
-        * {
+        .hover\\:scale-105, 
+        .hover\\:bg-accent,
+        [class*="hover\\:"],
+        .transition-transform,
+        .transition-colors:not(.intro-screen):not(.loading-screen) {
           animation-duration: 0.1s !important;
           transition-duration: 0.1s !important;
         }

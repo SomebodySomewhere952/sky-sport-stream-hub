@@ -57,7 +57,7 @@ export function IntroScreen({ onComplete }: IntroScreenProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-background z-50 flex items-center justify-center">
+    <div className="intro-screen fixed inset-0 bg-background z-50 flex items-center justify-center">
       {/* Background gradient effect */}
       <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-background to-background" />
       

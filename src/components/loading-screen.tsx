@@ -72,7 +72,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-background via-card to-background z-40 flex items-center justify-center">
+    <div className="loading-screen fixed inset-0 bg-gradient-to-br from-background via-card to-background z-40 flex items-center justify-center">
       {/* Animated geometric background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
